@@ -22,6 +22,7 @@ jobs:
         pip install -r requirements.txt
     - name: Ejecutar pruebas con Pytest
       env:
-        GOOGLE_API_KEY: "llave_falsa_para_tests" 
+        GOOGLE_API_KEY: "llave_falsa_para_tests"
+        PYTHONPATH: "." 
       run: |
         pytest tests/test_agents.py
