@@ -23,6 +23,9 @@ jobs:
     - name: Ejecutar pruebas con Pytest
       env:
         GOOGLE_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        LANGCHAIN_TRACING_V2: "true"
+        LANGCHAIN_API_KEY: ${{ secrets.LANGCHAIN_API_KEY }}
+        LANGCHAIN_PROJECT: "insightflow-ai-ci-tests"
         PYTHONPATH: "." 
       run: |
         pytest tests/test_agents.py
