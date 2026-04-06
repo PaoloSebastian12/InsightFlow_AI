@@ -1,8 +1,13 @@
 from typing import TypedDict , List , Annotated
+from langgraph import graph
 from langgraph.graph import StateGraph, END
 from app.service.llm_factory import get_model
 from app.schemas.agent_schema import FinalReport
 import operator
+from langsmith import Client
+from langsmith import traceable
+
+ls_client = Client()
 
 class AgentState(TypedDict):
     task: str
@@ -11,13 +16,20 @@ class AgentState(TypedDict):
     iterations: int
     approved: bool
 
+def run_research_logic(task):
+    config = {"configurable": {"thread_id": "1"}}
+    result = graph.invoke({"task": task}, config=config)
+    return result
+
+@traceable(name="Researcher Agent")
 def researcher_node(state: AgentState):
-    print(f"--- INVESTIGAting: {state['task']} ---")
+    print(f"--- INVESTIGATING: {state['task']} ---")
     llm = get_model()
     prompt = f"You're an expert researcher. Give me 3 hard, real facts about: {state['task']}. Be different from previous notes."
     response = llm.invoke(prompt)
     return {"research_notes": [response.content]}
 
+@traceable(name="Writer Agent")
 def writer_node(state: AgentState):
     print(f"--- WRITING REPORT: {state['task']} ---")
     llm = get_model()
@@ -47,6 +59,7 @@ def create_graph():
     workflow.add_edge("writer", END)
     return workflow.compile()
 
+@traceable(name="Analyst Agent")
 def analyst_node(state: AgentState):
     print(f"--- ANALYZING REPORT: {state['task']} ---")
     current_iter = state.get("iterations", 0)
