@@ -88,11 +88,11 @@ Frontend (Gradio): http://localhost:8501
 Backend (FastAPI Docs): http://localhost:8000/docs
 ```
 📈 Quality & Validation
-```bash
+
 The project integrates automated validations to ensure agent reliability:
 
  - API Response Schema: Enforced through defined types to prevent integration failures.
 
  - System Status Monitoring: Visual feedback on the dashboard regarding the agentic flow status.
- ```
+
 
