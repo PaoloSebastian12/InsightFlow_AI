@@ -76,21 +76,23 @@ Create a .env file in the root directory:
     LANGCHAIN_TRACING_V2=true
     LANGCHAIN_API_KEY=your_langsmith_api_key
     LANGCHAIN_PROJECT=insightflow-ai-test
-
+```
 ### 3. Deploy with Docker Compose
-
+```bash
 docker-compose up --build
-
+```
 ### 4. Access the Application
+```bash
 Frontend (Gradio): http://localhost:8501
 
 Backend (FastAPI Docs): http://localhost:8000/docs
-
+```
 📈 Quality & Validation
-
+```bash
 The project integrates automated validations to ensure agent reliability:
 
  - API Response Schema: Enforced through defined types to prevent integration failures.
 
  - System Status Monitoring: Visual feedback on the dashboard regarding the agentic flow status.
+ ```
 
